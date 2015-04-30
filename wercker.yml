@@ -18,4 +18,9 @@ build:
       - script:
           name: Run RSpec
           code: bundle exec rspec
-
+deploy:
+    steps:
+        - heroku-deploy
+        - script:
+            name: Update database
+            code: heroku run rake db:migrate --app $APP_NAME
