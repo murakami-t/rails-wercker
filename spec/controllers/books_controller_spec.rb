@@ -55,7 +55,7 @@ RSpec.describe BooksController, :type => :controller do
   describe "GET new" do
     it "assigns a new book as @book" do
       get :new, {}, valid_session
-      expect(assigns(:book)).to eq(Book)
+      expect(assigns(:book)).to be_a_new(Book)
     end
   end
 
