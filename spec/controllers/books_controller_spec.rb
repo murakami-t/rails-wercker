@@ -72,7 +72,7 @@ RSpec.describe BooksController, :type => :controller do
       it "creates a new Book" do
         expect {
           post :create, {:book => valid_attributes}, valid_session
-        }.to change(Book, :count).by(1)
+        }.to change(Book, :count).by(2)
       end
 
       it "assigns a newly created book as @book" do
@@ -95,7 +95,7 @@ RSpec.describe BooksController, :type => :controller do
 
       it "re-renders the 'new' template" do
         post :create, {:book => invalid_attributes}, valid_session
-        expect(response).to render_template("new")
+        expect(response).to render_template("test")
       end
     end
   end
