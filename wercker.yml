@@ -1,11 +1,11 @@
 box: wercker/ubuntu12.04-ruby2.0.0
 services:
-    - wercker/postgresql
+    - wercker/mysql
 build:
     steps:
       - bundle-install
       - rails-database-yml:
-          service: postgresql
+          service: mysql
       - script:
           name: echo ruby information
           code: |
@@ -18,24 +18,3 @@ build:
       - script:
           name: Run RSpec
           code: bundle exec rspec
-deploy:
-    steps:
-        - rvm-use:
-            version: 2.2.0
-        - bundle-install:
-            jobs: 4
-        - script:
-            name: make .ssh directory
-            code: mkdir -p "$HOME/.ssh"
-        - create-file:
-            name: write ssh key
-            filename: $HOME/.ssh/id_rsa
-            overwrite: true
-            hide-from-log: true
-            content: $WERCKER_SSH_KEY_PRIVATE # 独自鍵設定の場合は、$DEPLOY_KEY
-        - script:
-            name: set permissions for ssh key
-            code: chmod 0400 $HOME/.ssh/id_rsa
-        - cap:
-            stage: $WERCKER_DEPLOYTARGET_NAME
-            tasks: deploy
